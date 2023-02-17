@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-hot-toast';
 
-const initialState = [];
+const initialState = [{id: 1, name: 'Bradd Pitt', number: 232-34-56}];
 
 const contactsSlice = createSlice({
   name: 'contacts',

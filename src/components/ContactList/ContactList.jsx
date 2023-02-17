@@ -20,31 +20,19 @@ const visibleContacts = filteredContacts(contacts, filter)
 
   return (
     <List>
-      {visibleContacts.map(contact => {
-        return (
+
+
+{visibleContacts.length ? (
+        visibleContacts.map(contact => (
           <Item key={nanoid()}>
             <span>{contact.name} : </span>
             <span>{contact.number}</span>
             <Button onClick={() => dispatch(deleteContact(contact.id))}>Delete</Button>
           </Item>
-        );
-      })}
+        ))
+      ) : (<span>та блін</span>
+      )}
+      
     </List>
   );
 };
-
-// export const ContactList = ({ contacts, onDelete}) => {
-//   return (
-//     <List>
-//       {contacts.map(contact => {
-//         return (
-//           <Item key={nanoid()}>
-//             <span>{contact.name} : </span>
-//             <span>{contact.number}</span>
-//             <Button onClick={() => onDelete(contact.id)}>Delete</Button>
-//           </Item>
-//         );
-//       })}
-//     </List>
-//   );
-// };
