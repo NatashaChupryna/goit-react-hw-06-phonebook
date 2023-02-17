@@ -6,33 +6,60 @@ import { List, Button, Item } from './ContactList.styled';
 
 export const ContactList = () => {
   const contacts = useSelector(state => state.contacts);
-  const filter = useSelector(state => state.filter)
-const dispatch = useDispatch();
+  const filter = useSelector(state => state.filter);
+  const dispatch = useDispatch();
 
+  const filteredContacts = (contacts, filter) => {
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
+    );
+  };
 
-const filteredContacts = (contacts, filter) => {
- return contacts.filter(contact =>
-    contact.name.toLowerCase().includes(filter.toLowerCase()))
-}
-
-const visibleContacts = filteredContacts(contacts, filter)
+  const visibleContacts = filteredContacts(contacts, filter);
 
 
   return (
     <List>
-
-
-{visibleContacts.length ? (
+      {visibleContacts ? (
         visibleContacts.map(contact => (
           <Item key={nanoid()}>
             <span>{contact.name} : </span>
             <span>{contact.number}</span>
-            <Button onClick={() => dispatch(deleteContact(contact.id))}>Delete</Button>
+            <Button onClick={() => dispatch(deleteContact(contact.id))}>
+              Delete
+            </Button>
           </Item>
         ))
-      ) : (<span>та блін</span>
+      ) : (
+        <span>та блін</span>
       )}
-      
+
+      {/* {visibleContacts.length !== 0 &&
+        visibleContacts.map(contact => (
+          <>
+            <Item key={nanoid()}>
+              <span>{contact.name} : </span>
+              <span>{contact.number}</span>
+              <Button onClick={() => dispatch(deleteContact(contact.id))}>
+                Delete
+              </Button>
+            </Item>
+          </>
+        ))} */}
+
+      {/* {visibleContacts.length ? (
+        visibleContacts.map(contact => (
+          <Item key={nanoid()}>
+            <span>{contact.name} : </span>
+            <span>{contact.number}</span>
+            <Button onClick={() => dispatch(deleteContact(contact.id))}>
+              Delete
+            </Button>
+          </Item>
+        ))
+      ) : (
+        <span>та блін</span>
+      )} */}
     </List>
   );
 };

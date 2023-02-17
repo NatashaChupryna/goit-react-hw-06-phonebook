@@ -1,18 +1,29 @@
 import { nanoid } from '@reduxjs/toolkit';
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/contactsSlice';
-
+import { toast } from 'react-hot-toast';
 import { ContactsForm, Button, NameInput, NumberInput } from './Form.styled';
 
 export const ContactForm = function () {
   const dispatch = useDispatch();
+  const contacts = useSelector(state => state.contacts);
 
   const handleSubmit = event => {
     event.preventDefault();
     const form = event.target;
     const name = event.target.elements.name.value;
     const number = event.target.elements.number.value;
+    const existingContact = contacts.find(
+      contact => contact.name === name && contact.number === number
+    );
+
+    if (existingContact) {
+      toast.error(
+        `Uuum, the contact with name ${name} and phone number ${number} is already in the list`
+      );
+      return;
+    }
 
     dispatch(
       addContact({
@@ -21,6 +32,7 @@ export const ContactForm = function () {
         number: number,
       })
     );
+    
     form.reset();
   };
 
